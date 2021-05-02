@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 int main() {
 	int count;
 	int nmin = 1000000, nmax = -1000000;

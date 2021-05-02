@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 int main() {
 	int* numbers = new int[9];
 
