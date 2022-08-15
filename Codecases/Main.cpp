@@ -1,50 +1,41 @@
 #include <iostream>
 #include <string>
-#include <span>
 #include <array>
 #include <concepts>
 #include <vector>
-#include <ranges>
-#include <initializer_list>
 #include <algorithm>
 
 class Problem003052
 {
 public:
-	constexpr Problem003052()
-	{}
+	constexpr Problem003052() = default;
 
-	constexpr Problem003052()
+	constexpr Problem003052(const std::vector<int>& list)
+		: inputs(list)
 	{}
 
 	inline constexpr int operator()() const noexcept
 	{
 		int result = 0;
 
-		std::array<int, 42> outputs{};
-		outputs.fill(-1);
-
-		auto output_it = outputs;
+		std::array<bool, 42> outputs{ false };
 
 		std::for_each(inputs.cbegin(), inputs.cend(), [&](const int& value) {
-			const int tenth = value % 10;
 			const int fourtytwo = value % 42;
 
-			//int& output_ten = outputs[tenth];
-			int& output_fourtytwo = outputs[fourtytwo];
+			bool& output_fourtytwo = outputs[fourtytwo];
 
-			if (-1 == output_fourtytwo)
+			if (!output_fourtytwo)
 			{
 				result++;
+				output_fourtytwo = true;
 			}
-
-			output_fourtytwo++;
 		});
 
 		return result;
 	}
 
-	std::vector<int> inputs{ 39, 40, 41, 42, 43, 44, 82, 83, 84, 85 };
+	std::vector<int> inputs;
 };
 
 int main()
@@ -53,13 +44,15 @@ int main()
 
 	int index = 0;
 	int value = 0;
+	std::vector<int> inputs{ 10 };
 
-	while (std::cin >> value && index < 10)
+	while (index < 10 && std::cin >> value)
 	{
+		inputs.push_back(value);
 		index++;
 	}
 
-	const auto solution = Problem003052{};
+	const auto solution = Problem003052{ inputs };
 	const auto result = solution();
 
 	std::cout << "===================================\n";
